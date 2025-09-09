@@ -1,3 +1,4 @@
+# Creates ths IAM Policy
 resource "aws_iam_policy" "gha_runner_policy" {
   name        = "${var.name_prefix}-policy"
   description = "Policy for the GitHub Actions runner"
@@ -6,6 +7,7 @@ resource "aws_iam_policy" "gha_runner_policy" {
     Statement = [
       {
         Effect = "Allow"
+        # See more for this: https://gha-runner.readthedocs.io/en/latest/aws/#prepare-a-policy
         Action = concat(
           [
             "ec2:RunInstances",
@@ -22,6 +24,7 @@ resource "aws_iam_policy" "gha_runner_policy" {
   })
 }
 
+# Create the role
 resource "aws_iam_role" "gha_runner_oidc_role" {
   name = "${var.name_prefix}-oidc-role"
   assume_role_policy = jsonencode({
@@ -48,6 +51,7 @@ resource "aws_iam_role" "gha_runner_oidc_role" {
   })
 }
 
+# Attach the role to the policy
 resource "aws_iam_role_policy_attachment" "gha_runner_policy_attachment" {
   policy_arn = aws_iam_policy.gha_runner_policy.arn
   role       = aws_iam_role.gha_runner_oidc_role.name

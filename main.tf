@@ -40,10 +40,9 @@ module "github_oidc" {
   source = "./modules/github_oidc"
 }
 
-module "gha_runner" {
-  name_prefix = "gha-runner-tf"
-  source      = "./modules/gha_runner"
-  # github_oidc_provider_arn = "arn:aws:iam::730335439009:oidc-provider/token.actions.githubusercontent.com"
+module "aws_gha_runner" {
+  name_prefix              = "gha-runner-tf"
+  source                   = "./modules/aws_gha_runner"
   github_oidc_provider_arn = module.github_oidc.github_oidc_provider_arn
   github_oidc_repos_claims = local.repo_claims
 }
