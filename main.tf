@@ -9,14 +9,6 @@ terraform {
       version = "~> 6.0"
     }
   }
-
-  backend "s3" {
-    bucket         = "gha-runner-tfstate"
-    key            = "state/terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = "ecoinfra-tfstate-locks"
-  }
 }
 
 locals {
