@@ -46,6 +46,6 @@ resource "github_actions_secret" "secrets" {
   for_each        = toset(local.repos)
   repository      = each.value
   secret_name     = "AWS_ROLE"
-  plaintext_value = module.gha_runner.github_actions_oidc_role_arn
+  plaintext_value = module.aws_gha_runner.github_actions_oidc_role_arn
 }
 ```
